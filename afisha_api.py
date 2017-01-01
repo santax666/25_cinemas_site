@@ -52,7 +52,7 @@ class afisha:
         SECRET = bytes([45, 56, 38, 71, 42, 105, 50, 77])
         INT_2_POW_64 = 18446744073709551616
         self.api_url = 'http://api.afisha.ru/mobile/Service.aspx'
-        self.city_id = '2'
+        self.city_id = '2599'
         self.cls_id = '16'
         self.sort = 5
         self.start = '0'
