@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>О фильме "{{ film['name'] }}"</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../static/css/film.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="../static/js/html5shiv.js"></script>
+        <script src="../static/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Главная</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/">Фильмы</a>
+                    </li>
+<!--
+                    <li>
+                        <a href="index.html#">Кинотеатры</a>
+                    </li>
+                    <li>
+                        <a href="index.html#">Contact</a>
+                    </li>
+-->
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-md-8">
+                <img class="img-responsive" src="{{ film['photoUrl'] }}" alt="">
+            </div>
+            <div class="col-md-4">
+                <h3>{{ film['year'] }}, {{ film['country'] }}</h3>
+                <p>{{ film['tags'] }}</p>
+                <p>{{ film['verdict'] }}</p>
+                <h3>Съемочная группа</h3>
+                <ul>
+                    <li>Режиссер: {{ film['directors'] }}</li>
+                    {% if film['actors'] %}
+                        <li>Актеры: {{ film['actors'] }}</li>
+                    {% endif %}
+                    <li>{{ film['length'] }} мин</li>
+                    {% if film['url'] %}
+                        <li>Сайт: <a href="http://{{ film['url'] }}">{{ film['url'] }}</a></li>
+                    {% endif %}
+                </ul>
+<!--
+                {% for review in film['review'] %}
+                    {% if review['type'] == 1  %}
+                        <h3>Рецензия "Афиши"</h3>
+                        <p>{{ review['resFull'] }}</p>
+                    {% endif %}
+                {% endfor %}
+-->
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+
+        <div class="row">
+
+            <div class="col-md-8">
+
+                <div class="thumbnail">
+
+                    <div class="caption-full">
+                        <h5 class="pull-right">{{ film['PGRating'] }}</h5>
+                        <h4><a href="{{ film['objectUrl'] }}">{{ film['name'] }}</a>
+                        </h4>
+                        <p>{{ film['desc'] }}</p>
+                        <p><a href="content/{{ film['id'] }}">Трейлеры и Фотографии</a></p>
+                    </div>
+                    <div class="ratings">
+                        <p class="pull-right">пойдут в кино: {{ film['igoTotalCount'] }}  <span class="glyphicon glyphicon-thumbs-up"></span></p>
+                        <p>
+                            {% for star_count in range(film['rate_int']) %}
+                              <span class="glyphicon glyphicon-star"></span>
+                            {% endfor %}
+                            {% for star_count in range(5-film['rate_int']) %}
+                              <span class="glyphicon glyphicon-star-empty"></span>
+                            {% endfor %}
+                             рейтинг: {{ film['rate'] }}, голосов: {{ film['rateCount'] }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="well">
+                    <h4>Рецензии от пользователей</h4>
+                {% for review in film['review'] %}
+                    {% if review['type'] != 1  %}
+                    <hr>
+                    <div class="row">
+<!--                        <div class="col-md-12"> -->
+                        <div class="ratings">
+                            {% for star_count in range(review['rate']) %}
+                              <span class="glyphicon glyphicon-star"></span>
+                            {% endfor %}
+                            {% for star_count in range(5-review['rate']) %}
+                              <span class="glyphicon glyphicon-star-empty"></span>
+                            {% endfor %}
+                            {{ review['name'] }}
+                            <span class="pull-right">{{ review['when'] }}</span>
+                        </div>
+                        <div class="col-md-12">
+                            <p><span title="{{ review['resFull'] }}">{{ review['resShort'] }}</span></p>
+                        </div>
+                    </div>
+                {% endif %}
+                {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Настоящий сайт создан в исключительно учебных целях. Все сведения о фильмах взяты с сайта <a href="http://www.afisha.ru">Афиша</a>.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="../static/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../static/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
