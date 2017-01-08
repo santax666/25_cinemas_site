@@ -11,12 +11,16 @@ api = afisha()
 @app.route('/')
 @app.route('/page/<int:page_id>')
 def show_films(page_id=1):
-    films = api.schedule_cinema((page_id-1)*9)
+    cache_time = 12*60*60
+    films = cache.get('page_{0}'.format(page_id))
+    if films is None:
+        films = api.schedule_cinema((page_id-1)*9)
+        for film in films['list']:
+            film.update(api.film_info(film['id']))
+            film['rate_int'] = int(film['rate'])
+            cache.set(film['id'], film, cache_time)
+        cache.set('page_{0}'.format(page_id), films, cache_time)
     films_pages = (films['maxCount']-1) // 9 + 1
-    for film in films['list']:
-        film.update(api.film_info(film['id']))
-        film['rate_int'] = int(film['rate'])
-        cache.set(film['id'], film, 12*60*60)
     return render_template('films.html', films=enumerate(films['list']),
                            pages=(films_pages, page_id,))
 
