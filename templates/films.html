@@ -7,11 +7,11 @@
         <div class="row">
       {% endif %}
             <div class="col-md-4 portfolio-item">
-                <a href="film/{{ film['id'] }}">
+                <a href="{{ url_for('show_film_info', film_id=film['id']) }}">
                     <img class="img-responsive" src="{{ film['photoUrl'] }}" alt="">
                 </a>
                 <h4>
-                    <a href="film/{{ film['id'] }}">{{ film['name'] }} ({{ film['year'] }})</a>
+                    <a href="{{ url_for('show_film_info', film_id=film['id']) }}">{{ film['name'] }} ({{ film['year'] }})</a>
                 </h4>
                 <p>{{ film['verdict'] }}</p>
                 <div class="ratings">
