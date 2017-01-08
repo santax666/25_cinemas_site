@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block title %}"{{ film['name'] }}"{% endblock %}
+{% block page_header %}
+    {{ film['name'] }}
+        {% if film['nameOrg'] %}
+            ({{ film['nameOrg'] }})
+        {% endif %}
+    <small style="float: right;">{{ film['PGRating'] }}</small>
+{% endblock %}
+{% block body %}
+        <div class="row">
+            <div class="col-md-8">
+                <img class="img-responsive" src="{{ film['photoUrl'] }}" alt="">
+                <div class="ratings">
+                    <p></p>
+                    <p class="pull-right">пойдут в кино: {{ film['igoTotalCount'] }}  <span class="glyphicon glyphicon-thumbs-up"></span></p>
+                    <p>
+                        {% for star_count in range(film['rate_int']) %}
+                          <span class="glyphicon glyphicon-star"></span>
+                        {% endfor %}
+                        {% for star_count in range(5-film['rate_int']) %}
+                          <span class="glyphicon glyphicon-star-empty"></span>
+                        {% endfor %}
+                         рейтинг: {{ film['rate'] }}, голосов: {{ film['rateCount'] }}
+                    </p>
+                </div>
+                <div class="reviews">
+                    <p>{{ film['desc'] }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3>О фильме</h3>
+                <p>Год: {{ film['year'] }}</p>
+                <p>Страна: {{ film['country'] }}</p>
+                <p>Жанр: {{ film['tags'] }}</p>
+                <h3>Съемочная группа</h3>
+                <ul>
+                    <li>Режиссер: {{ film['directors'] }}</li>
+                    {% if film['actors'] %}
+                        <li>Актеры: {{ film['actors'] }}</li>
+                    {% endif %}
+                    <li>{{ film['length'] }} мин</li>
+                    {% if film['url'] %}
+                        <li>Сайт: <a href="http://{{ film['url'] }}">{{ film['url'] }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+{% endblock %}

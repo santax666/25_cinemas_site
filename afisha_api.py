@@ -5,12 +5,12 @@ import pyDes as coding
 
 
 class afisha:
-    def schedule_cinema(self):
+    def schedule_cinema(self, film_start=0):
         self.action = 'theme_schedule'
         query = {'action': self.action, 'cityId': self.city_id, 'themeid': 2,
-                 'start': self.start, 'count': self.count,
+                 'start': film_start, 'count': self.count,
                  'sortOrder': self.sort}
-        return self.request(query)['list']
+        return self.request(query)
 
 
     def film_review(self, film_id):
@@ -52,11 +52,11 @@ class afisha:
         SECRET = bytes([45, 56, 38, 71, 42, 105, 50, 77])
         INT_2_POW_64 = 18446744073709551616
         self.api_url = 'http://api.afisha.ru/mobile/Service.aspx'
-        self.city_id = '2599'
-        self.cls_id = '16'
+        self.city_id = 2
+        self.cls_id = 16
         self.sort = 5
-        self.start = '0'
-        self.count = '1000'
+        self.start = 0
+        self.count = 9
         self.phone_id = ''.join(random.sample(string.ascii_lowercase, 12))
         self.phone_name = random.choice(('JiaYu', 'Acer', 'Samsung', 'Fly',))
         self.phone_resolution = random.choice(('480x800', '720x1280',))

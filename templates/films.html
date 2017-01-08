@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block title %}Фильмы в Москве{% endblock %}
+{% block page_header %}Сеансы в кинотеатрах Москвы{% endblock %}
+{% block body %}
+      {% for film_count, film in films %}
+      {% if film_count % 3 == 0 %}
+        <div class="row">
+      {% endif %}
+            <div class="col-md-4 portfolio-item">
+                <a href="film/{{ film[0] }}">
+                    <img class="img-responsive" src="{{ film[1]['photoUrl'] }}" alt="">
+                </a>
+                <h4>
+                    <a href="film/{{ film[0] }}">{{ film[1]['name'] }} ({{ film[1]['year'] }})</a>
+                </h4>
+                <p>{{ film[1]['verdict'] }}</p>
+                <div class="ratings">
+                    <p class="pull-right"><span class="glyphicon glyphicon-thumbs-up"></span> {{ film[1]['igoTotalCount'] }}</p>
+                    <p>
+                    {% for star_count in range(film['rate_int']) %}
+                      <span class="glyphicon glyphicon-star"></span>
+                    {% endfor %}
+                    {% for star_count in range(5-film['rate_int']) %}
+                      <span class="glyphicon glyphicon-star-empty"></span>
+                    {% endfor %}
+                    </p>
+                </div>
+            </div>
+      {% if film_count % 3 == 2 %}
+        </div>
+        <hr>
+      {% endif %}
+      {% endfor %}
+
+      {% if pages[0] > 1 %}
+        {% block pagination %}
+            {% import "pagination.html" as pagination_macros %}
+            {{ pagination_macros.render_pagination(pages[0], pages[1]) }}
+        {% endblock pagination %}
+      {% endif %}
+{% endblock %}

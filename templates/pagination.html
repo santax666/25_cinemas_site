@@ -1,0 +1,17 @@
+{% macro render_pagination(pages_count, page_current) %}
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <ul class="pagination">
+        {% for page in range(pages_count) %}
+            {% if page+1 == page_current %}
+                <li class="active">
+            {% else %}
+                <li>
+            {% endif %}
+                    <a href="/page/{{ page+1 }}">{{ page+1 }}</a>
+                </li>
+        {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endmacro %}
