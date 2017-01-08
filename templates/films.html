@@ -7,15 +7,15 @@
         <div class="row">
       {% endif %}
             <div class="col-md-4 portfolio-item">
-                <a href="film/{{ film[0] }}">
-                    <img class="img-responsive" src="{{ film[1]['photoUrl'] }}" alt="">
+                <a href="film/{{ film['id'] }}">
+                    <img class="img-responsive" src="{{ film['photoUrl'] }}" alt="">
                 </a>
                 <h4>
-                    <a href="film/{{ film[0] }}">{{ film[1]['name'] }} ({{ film[1]['year'] }})</a>
+                    <a href="film/{{ film['id'] }}">{{ film['name'] }} ({{ film['year'] }})</a>
                 </h4>
-                <p>{{ film[1]['verdict'] }}</p>
+                <p>{{ film['verdict'] }}</p>
                 <div class="ratings">
-                    <p class="pull-right"><span class="glyphicon glyphicon-thumbs-up"></span> {{ film[1]['igoTotalCount'] }}</p>
+                    <p class="pull-right"><span class="glyphicon glyphicon-thumbs-up"></span> {{ film['igoTotalCount'] }}</p>
                     <p>
                     {% for star_count in range(film['rate_int']) %}
                       <span class="glyphicon glyphicon-star"></span>
