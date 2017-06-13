@@ -32,7 +32,7 @@
                     <li>Страна: {{ film['Country'] }}</li>
                     <li>Жанр: {{ film['Genre'] }}</li>
                     <li>Длительность: {{ film['Length'] }} мин</li>
-                    {% if film['Release'] %}
+                    {% if film['Exit'] %}
                         <li>Дата выхода в России: {{ film['Exit'].strftime('%d.%m.%Y') }}</li>
                     {% endif %}
                 </ul>
