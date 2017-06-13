@@ -1,41 +1,49 @@
 {% extends "layout.html" %}
 {% block title %}Фильмы в Москве{% endblock %}
-{% block page_header %}Сеансы в кинотеатрах Москвы{% endblock %}
+{% block page_header %}
+  {% if kind[0] == 'schedule' %}
+    Сеансы в кинотеатрах Москвы
+  {% else %}
+    Список фильмов по запросу "{{ kind[1] }}"
+  {% endif %}
+{% endblock %}
 {% block body %}
-      {% for film_count, film in films %}
-      {% if film_count % 3 == 0 %}
+      {% for film in films %}
+      {% if loop.index0 % 3 == 0 %}
         <div class="row">
       {% endif %}
             <div class="col-md-4 portfolio-item">
-                <a href="{{ url_for('show_film_info', film_id=film['id']) }}">
-                    <img class="img-responsive" src="{{ film['photoUrl'] }}" alt="">
+                <a href="{{ url_for('show_film_info', film_id=film['Creation']['ObjectID']) }}">
+                    <img class="img-responsive" src="{{ film['Creation']['PhotoUrl']|default('https://img.afisha.ru/mobile_img/empty_256x144.jpg', true)|replace('https://', 'https://img05.rl0.ru/afisha/e352x-q80i/') }}" alt="">
                 </a>
                 <h4>
-                    <a href="{{ url_for('show_film_info', film_id=film['id']) }}">{{ film['name'] }} ({{ film['year'] }})</a>
+                    <a href="{{ url_for('show_film_info', film_id=film['Creation']['ObjectID']) }}">{{ film['Creation']['Name'] }} ({{ film['Creation']['Year'] }})</a>
                 </h4>
-                <p>{{ film['verdict'] }}</p>
+            {% if film['Creation']['Verdict'] %}
+                <p>{{ film['Creation']['Verdict'] }}</p>
+            {% endif %}
                 <div class="ratings">
-                    <p class="pull-right"><span class="glyphicon glyphicon-thumbs-up"></span> {{ film['igoTotalCount'] }}</p>
+                    <p class="pull-right"><span class="glyphicon glyphicon-film"></span> {{ film['PlaceCount'] }}</p>
                     <p>
-                    {% for star_count in range(film['rate_int']) %}
+                    {% for star_count in range(film['Creation']['Rate']|int) %}
                       <span class="glyphicon glyphicon-star"></span>
                     {% endfor %}
-                    {% for star_count in range(5-film['rate_int']) %}
+                    {% for star_count in range(10-film['Creation']['Rate']|int) %}
                       <span class="glyphicon glyphicon-star-empty"></span>
                     {% endfor %}
                     </p>
                 </div>
             </div>
-      {% if film_count % 3 == 2 %}
+      {% if loop.index0 % 3 == 2 %}
         </div>
         <hr>
+      {% else %}
+        {% if loop.last %}
+          </div>
+          <hr>
+        {% endif %}
       {% endif %}
+      {% else %}
+        {% include 'not_found.html' %}
       {% endfor %}
-
-      {% if pages[0] > 1 %}
-        {% block pagination %}
-            {% import "pagination.html" as pagination_macros %}
-            {{ pagination_macros.render_pagination(pages[0], pages[1]) }}
-        {% endblock pagination %}
-      {% endif %}
 {% endblock %}
