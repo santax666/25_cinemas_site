@@ -44,7 +44,7 @@ def film_id_from_kp_plus(name, year):
     for film_info in films_data:
         film = json.loads(film_info)
         if film['searchObjectType'] == 'COBJECT':
-            if film['title'] == name and film['years'][0] == year:
+            if film.get('title') == name and film['years'][0] == year:
                 return str(film['entityId'])
 
 

@@ -48,7 +48,7 @@
                 </ul>
                 <h3>Рейтинг</h3>
                 <ul>
-                    <li><a href="{{ film['AfishaPageUrl'] }}">Афиши: {{ film['Rate']|round(3) }} ({{ film['RateCount'] }})</a></li>
+                    <li><a href="{{ film['AfishaPageUrl'] }}">Афиши: {% if film['Rate'] %}{{ film['Rate']|round(3) }}{% else %}-{% endif %} ({% if film['RateCount'] %}{{ film['RateCount'] }}{% else %}-{% endif %})</a></li>
                     <li>{% if film['kp_id'] %}<a href="https://www.kinopoisk.ru/film/{{ film['kp_id'] }}/">{% endif %}Кинопоиска: {{ film['kp'][0] }} ({{ film['kp'][1] }}){% if film['kp_id'] %}</a>{% endif %}</li>
                     <li>{{ film['imdb'] }}</li>
                 </ul>
