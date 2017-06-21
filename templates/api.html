@@ -1,74 +1,72 @@
 {% extends "layout.html" %}
 {% block title %}Описание HTTP API{% endblock %}
 {% block page_header %}
-    Информация о работе с API
+  Информация о работе с API
 {% endblock %}
 {% block body %}
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Для удобства использования на сайте применяется публичное HTTP API, предоставляющее информацию о фильмах в формате JSON.</p>
-            <p>На данный момент реализовано 3 варианта GET-запросов к API:</p>
-                </div>
-            </div>
-        <hr>
-            <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-film"></i> schedule</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>В результате запроса предоставляется краткая информация о фильмах, которые показывают сегодня в кинотеатрах.</p>
-            <p>У запроса есть необязательный параметр - date, со следующими значениями:</p>
-            <ul>
-                <li>1:  Сегодня</li>
-                <li>2:  Завтра</li>
-                <li>3:  Выходные</li>
-                <li>4:  Следующая неделя</li>
-                <li>5:  Следующие выходные</li>
-                <li>6:  Ближайший месяц</li>
-            </ul>
-            <p>Примеры запросов:</p>
-            <ul>
-                <li><a href="/api/schedule">/api/schedule</a> - Фильмы сегодня</li>
-                <li><a href="/api/schedule?date=3">/api/schedule?date=3</a> - Фильмы в выходные</li>
-            </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-info-circle"></i> film</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>В результате запроса предоставляется полная информация о фильме, включая ссылки на фото и трейлеры.</p>
-            <p>У запроса есть обязательный параметр - id фильма, значение которого можно узнать либо на сайте Афиши или данном сайте, либо в ключе 'ObjectID' через запрос schedule или search</p>
-            <p>Примеры запросов:</p>
-            <ul>
-                <li><a href="/api/film?id=167945">/api/film?id=167945</a> - Фильм "Такси"</li>
-                <li><a href="/api/film?id=169399">/api/film?id=169399</a> - Фильм "Вий"</li>
-            </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-search"></i> search</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>В результате запроса выполняется поиск и выводится результат о фильмах, которые соответствуют названию, введенному вами.</p>
-            <p>У запроса есть обязательный параметр - name, являющийся фразой для поиска</p>
-            <p>Примеры запросов:</p>
-            <ul>
-                <li><a href="/api/search?name=matrix">/api/search?name=matrix</a> - поиск по фразе "matrix"</li>
-                <li><a href="/api/search?name=гараж">/api/search?name=гараж</a> - поиск по фразе "гараж"</li>
-            </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+<div class="row">
+  <div class="col-lg-12">
+    <p>Для удобства использования на сайте применяется публичное HTTP API, предоставляющее информацию о фильмах в формате JSON.</p>
+    <p>На данный момент реализовано 3 варианта GET-запросов к API:</p>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4><i class="glyphicon glyphicon-film"></i> schedule</h4>
+      </div>
+      <div class="panel-body">
+        <p>В результате запроса предоставляется краткая информация о фильмах, которые показывают сегодня в кинотеатрах.</p>
+        <p>У запроса есть необязательный параметр - date, со следующими значениями:</p>
+        <ul>
+          <li>1:  Сегодня</li>
+          <li>2:  Завтра</li>
+          <li>3:  Выходные</li>
+          <li>4:  Следующая неделя</li>
+          <li>5:  Следующие выходные</li>
+          <li>6:  Ближайший месяц</li>
+        </ul>
+        <p>Примеры запросов:</p>
+        <ul>
+          <li><a href="/api/schedule">/api/schedule</a> - Фильмы сегодня</li>
+          <li><a href="/api/schedule?date=3">/api/schedule?date=3</a> - Фильмы в выходные</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4><i class="glyphicon glyphicon-info-sign"></i> film</h4>
+      </div>
+      <div class="panel-body">
+        <p>В результате запроса предоставляется полная информация о фильме, включая ссылки на фото и трейлеры.</p>
+        <p>У запроса есть обязательный параметр - id фильма, значение которого можно узнать либо на сайте Афиши или данном сайте, либо в ключе 'ObjectID' через запрос schedule или search</p>
+        <p>Примеры запросов:</p>
+        <ul>
+          <li><a href="/api/film?id=167945">/api/film?id=167945</a> - Фильм "Такси"</li>
+          <li><a href="/api/film?id=169399">/api/film?id=169399</a> - Фильм "Вий"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4><i class="glyphicon glyphicon-search"></i> search</h4>
+      </div>
+      <div class="panel-body">
+        <p>В результате запроса выполняется поиск и выводится результат о фильмах, которые соответствуют названию, введенному вами.</p>
+        <p>У запроса есть обязательный параметр - name, являющийся фразой для поиска</p>
+        <p>Примеры запросов:</p>
+        <ul>
+          <li><a href="/api/search?name=matrix">/api/search?name=matrix</a> - поиск по фразе "matrix"</li>
+          <li><a href="/api/search?name=гараж">/api/search?name=гараж</a> - поиск по фразе "гараж"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
-

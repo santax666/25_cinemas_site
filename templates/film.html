@@ -1,58 +1,110 @@
 {% extends "layout.html" %}
 {% block title %}"{{ film['Name'] }}"{% endblock %}
 {% block page_header %}
-    {{ film['Name'] }}
-    <small style="float: right;">{{ film['AgeRating'] }}</small>
+{{ film['Name'] }}
+<small style="float: right;">{{ film['AgeRating'] }}</small>
 {% endblock %}
 {% block body %}
-        <div class="row">
-            <div class="col-md-8">
-                <img class="img-responsive" src="{{ film['PhotoUrl']|default('https://img.afisha.ru/mobile_img/empty_256x144.jpg', true)|replace('https://', 'https://img06.rl0.ru/afisha/e1200x628w2cc/') }}" alt="">
-                <div class="ratings">
-                    <p></p>
-                    <p class="pull-right"><span class="glyphicon glyphicon-film"></span> {{ film['Tags'] }}</p>
-                    <p>
-                        {% for star_count in range(film['Rate']|int) %}
-                          <span class="glyphicon glyphicon-star"></span>
-                        {% endfor %}
-                        {% for star_count in range(10-film['Rate']|int) %}
-                          <span class="glyphicon glyphicon-star-empty"></span>
-                        {% endfor %}
-                    </p>
-                </div>
-                <hr>
-                <div class="reviews">
-                    <p>{{ film['Description'] }}</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <h3>О фильме</h3>
-                <ul>
-                    <li>Год: {{ film['Year'] }}</li>
-                    <li>Страна: {{ film['Country'] }}</li>
-                    <li>Жанр: {{ film['Genre'] }}</li>
-                    <li>Длительность: {{ film['Length'] }} мин</li>
-                    {% if film['Exit'] %}
-                        <li>Дата выхода в России: {{ film['Exit'].strftime('%d.%m.%Y') }}</li>
-                    {% endif %}
-                </ul>
-                <h3>Съемочная группа</h3>
-                <ul>
-                    <li>Режиссер: {{ film['Directors'] }}</li>
-                    {% if film['Actors'] %}
-                        <li>В ролях: {{ film['Actors'] }}</li>
-                    {% endif %}
-                    {% if film['SiteUrl'] %}
-                        <li>Сайт: <a href="http://{{ film['SiteUrl'] }}">{{ film['SiteUrl'] }}</a></li>
-                    {% endif %}
-                </ul>
-                <h3>Рейтинг</h3>
-                <ul>
-                    <li><a href="{{ film['AfishaPageUrl'] }}">Афиши: {% if film['Rate'] %}{{ film['Rate']|round(3) }}{% else %}-{% endif %} ({% if film['RateCount'] %}{{ film['RateCount'] }}{% else %}-{% endif %})</a></li>
-                    <li>{% if film['kp_id'] %}<a href="https://www.kinopoisk.ru/film/{{ film['kp_id'] }}/">{% endif %}Кинопоиска: {{ film['kp'][0] }} ({{ film['kp'][1] }}){% if film['kp_id'] %}</a>{% endif %}</li>
-                    <li>{{ film['imdb'] }}</li>
-                </ul>
-
-            </div>
+<div class="row">
+  <div class="col-lg-7">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-film"></span> {{ film['Tags'] }}
+      </div>
+      <div class="panel-body">
+        <img class="img-responsive" src="{{ film['PhotoUrl']|default('https://img.afisha.ru/mobile_img/empty_256x144.jpg', true)|replace('https://', 'https://img06.rl0.ru/afisha/e1200x628w2cc/') }}" alt="">
+        <div class="well">
+          <p>{{ film['Description'] }}</p>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-info-sign"></span> О фильме
+      </div>
+      <div class="panel-body">
+        <dl class="dl-horizontal">
+          <dt>Год:</dt>
+          <dd>{{ film['Year'] }}</dd>
+          <dt>Страна:</dt>
+          <dd>{{ film['Country'] }}</dd>
+          <dt>Жанр:</dt>
+          <dd>{{ film['Genre'] }}</dd>
+          <dt>Длительность:</dt>
+          <dd>{{ film['Length'] }} мин</dd>
+          {% if film['Exit'] %}
+            <dt>Премьера в России:</dt>
+            <dd>{{ film['Exit'].strftime('%d.%m.%Y') }}</dd>
+          {% endif %}
+          <dt>Режиссер:</dt>
+          <dd>{{ film['Directors'] }}</dd>
+          {% if film['Actors'] %}
+            <dt>В ролях:</dt>
+            <dd>{{ film['Actors'] }}</dd>
+          {% endif %}
+          {% if film['SiteUrl'] %}
+            <dt>Сайт:</dt>
+            <dd><a href="http://{{ film['SiteUrl'] }}">{{ film['SiteUrl'] }}</a></dd>
+          {% endif %}
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-stats"></span> Рейтинг
+      </div>
+      <div class="panel-body">
+        <dl class="dl-horizontal">
+          <dt>Афиши:</dt>
+          <dd><a href="{{ film['AfishaPageUrl'] }}">рейтинг
+            {% if film['Rate'] %}
+              {{ film['Rate']|round(3) }};
+            {% else %}
+              отсутствует;
+            {% endif %}
+            {% if film['RateCount'] %}
+              голосов {{ film['RateCount'] }};
+            {% else %}
+              голоса отсутствуют;
+            {% endif %}</a>
+          </dd>
+          {% if film['kp_id'] %}
+            <dt>Кинопоиска:</dt>
+            <dd><a href="https://www.kinopoisk.ru/film/{{ film['kp_id'] }}/">рейтинг
+            {% if film['kp'][0] %}
+              {{ film['kp'][0] }};
+            {% else %}
+              отсутствует;
+            {% endif %}
+            {% if film['kp'][1] %}
+              голосов {{ film['kp'][1] }};
+            {% else %}
+              голоса отсутствуют;
+            {% endif %}</a>
+          </dd>
+          {% endif %}
+          {% if film['imdb'] %}
+            <dt>IMDb:</dt>
+            <dd>рейтинг
+            {% if film['imdb'][0] != '-' %}
+              {{ film['imdb'][0][:-1] }};
+            {% else %}
+              отсутствует;
+            {% endif %}
+            {% if film['imdb'][1] != '-' %}
+              голосов {{ film['imdb'][1] }};
+            {% else %}
+              голоса отсутствуют;
+            {% endif %}</a>
+          </dd>
+          {% endif %}
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

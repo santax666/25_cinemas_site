@@ -1,69 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
     <title>{% block title %}{% endblock %}</title>
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/css/films.css" rel="stylesheet">
-    <link href="../static/css/font-awesome.min.css" rel="stylesheet">
-
+    <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/films.css')}}" rel="stylesheet">
     <!--[if lt IE 9]>
-        <script src="../static/js/html5shiv.js"></script>
-        <script src="../static/js/respond.min.js"></script>
+    <script src="{{url_for('static', filename='js/html5shiv.js')}}"></script>
+    <script src="{{url_for('static', filename='js/respond.min.js')}}"></script>
     <![endif]-->
-</head>
-<body>
+  </head>
+  <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url_for('show_films_schedule') }}">Главная</a>
-            </div>
-
-            <form class="navbar-form" role="search" style="float: right;" action="/search">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Поиск.." name="query">
-                <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                </div>
-            </div>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="{{ url_for('get_api', kind='info') }}">API</a>
-                </li>
-            </ul>
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('show_films_schedule') }}">Главная</a>
         </div>
+        <form class="navbar-form" role="search" style="float: right;" action="/search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Поиск.." name="query">
+            <div class="input-group-btn">
+              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+          </div>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="{{ url_for('get_api', kind='info') }}">API</a>
+          </li>
+        </ul>
+      </div>
     </nav>
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">{% block page_header %}{% endblock %}</h1>
-            </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">{% block page_header %}{% endblock %}</h1>
         </div>
-        {% block body %}{% endblock %}
-
-    <hr>
-
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Настоящий сайт создан в исключительно учебных целях. Все сведения о фильмах взяты с сайтов <a href="http://www.afisha.ru">Афиша</a> и <a href="https://www.kinopoisk.ru/">Кинопоиск</a>.</p>
-                </div>
-            </div>
-        </footer>
+      </div>
+      {% block body %}{% endblock %}
+      <hr>
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p>Настоящий сайт создан в исключительно учебных целях. Все сведения о фильмах взяты с сайтов <a href="http://www.afisha.ru">Афиша</a> и <a href="https://www.kinopoisk.ru/">Кинопоиск</a>.</p>
+          </div>
+        </div>
+      </footer>
     </div>
-
-    <script src="../static/js/jquery.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
-</body>
+    <script src="{{url_for('static', filename='js/jquery.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+  </body>
 </html>
