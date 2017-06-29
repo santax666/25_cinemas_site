@@ -1,10 +1,12 @@
+import re
 import json
 import requests
 from datetime import datetime
 from bs4 import BeautifulSoup
 
 
-def get_film_id(name, year):
+def get_film_id(name_film, year):
+    name = re.sub(r'(-)(\d+)$', r' \2', name_film)
     url = 'https://suggest-kinopoisk.yandex.net/suggest-kinopoisk'
     payload = {'srv': 'kinopoisk', 'part': name,
                '_': int(datetime.now().timestamp())}
