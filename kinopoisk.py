@@ -8,14 +8,15 @@ from bs4 import BeautifulSoup
 def get_film_id(name_film, year):
     name = re.sub(r'(-)(\d+)$', r' \2', name_film)
     url = 'https://suggest-kinopoisk.yandex.net/suggest-kinopoisk'
-    payload = {'srv': 'kinopoisk', 'part': name,
-               '_': int(datetime.now().timestamp())}
-    films_data = requests.get(url, params=payload).json()[2]
-    for film_info in films_data:
-        film = json.loads(film_info)
-        if film['searchObjectType'] == 'COBJECT':
-            if film.get('title') == name and film['years'][0] == year:
-                return str(film['entityId'])
+    query = {'srv': 'kinopoisk', 'part': name, '_': datetime.now().timestamp()}
+    content = requests.get(url, params=query).json()[2]
+    films_data = [json.loads(x) for x in content]
+    films = [x for x in films_data if x['searchObjectType'] == 'COBJECT']
+    for film in films:
+        if film.get('title') == name and film['years'][0] == year:
+            return str(film['entityId'])
+    else:
+        return str(films[0]['entityId'])
 
 
 def get_ratings(kp_id):
