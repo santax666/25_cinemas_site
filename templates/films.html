@@ -1,14 +1,4 @@
 {% extends "layout.html" %}
-{% block title %}Фильмы в Москве{% endblock %}
-{% block page_header %}
-{% if kind[0] == 'schedule' %}
-  Сеансы в кинотеатрах Москвы
-{% elif kind[0] == '404' %}
-  Информация по фильму с ID={{ kind[1] }}
-{% else %}
-  Список фильмов по запросу "{{ kind[1] }}"
-{% endif %}
-{% endblock %}
 {% block body %}
 {% for film in films %}
 {% if loop.index0 % 3 == 0 %}
@@ -36,16 +26,15 @@
       </p>
     </div>
   </div>
-{% if loop.index0 % 3 == 2 %}
-</div>
-<hr>
+
+{% if not loop.last %}
+  {% if loop.index0 % 3 == 2 %}
+    </div>
+    <hr>
+  {% endif %}
 {% else %}
-{% if loop.last %}
-</div>
-<hr>
+   </div>
 {% endif %}
-{% endif %}
-{% else %}
-  {% include 'not_found.html' %}
+
 {% endfor %}
 {% endblock %}
