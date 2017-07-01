@@ -15,30 +15,30 @@
     <![endif]-->
   </head>
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav role="navigation" class="navbar navbar-default navbar-fixed-top navbar-inverse">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
+          <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{ url_for('show_films_schedule') }}">Главная</a>
+          <a href="{{ url_for('show_films_schedule') }}" class="navbar-brand">Главная</a>
         </div>
-        <form class="navbar-form" role="search" style="float: right;" action="/search">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Поиск.." name="query">
-            <div class="input-group-btn">
-              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+        <div id="navbarCollapse" class="collapse navbar-collapse">
+          <form role="search" class="navbar-form navbar-right" action="/search">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Поиск.." name="query">
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              </div>
             </div>
-          </div>
-        </form>
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a href="{{ url_for('get_api', kind='info') }}">API</a>
-          </li>
-        </ul>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url_for('get_api', kind='info') }}">API</a></li>
+          </ul>
+        </div>
       </div>
     </nav>
     <div class="container">
@@ -48,11 +48,8 @@
         </div>
       </div>
       {% block body %}{% endblock %}
-
       <footer>
-
         <hr>
-
         <div class="row">
           <div class="col-lg-12">
             <p>Настоящий сайт создан в исключительно учебных целях. Все сведения о фильмах взяты с сайтов <a href="http://www.afisha.ru">Афиша</a> и <a href="https://www.kinopoisk.ru/">Кинопоиск</a>.</p>

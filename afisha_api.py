@@ -1,7 +1,7 @@
 import requests
 
 
-class afisha:
+class afisha_films:
     def __init__(self):
         header = {'Host': 'mobile.api.afisha.ru', 'User-Agent': 'okhttp/3.6.0',
                   'X-Afisha-Session-ID': '', 'X-Afisha-City-ID': '2',
@@ -13,17 +13,17 @@ class afisha:
         self.session.headers = header
         self.session.verify = False
 
-    def schedule(self, date=1, offset=0, limit=1000):
+    def get_schedule(self, date=1, offset=0, limit=1000):
         params = {'themeID': 2, 'sortOrder': 0, 'dateRangeID': date,
                   'range.Limit': limit, 'range.Offset': offset}
         films_url = '{}/themeevents'.format(self.url)
         return self.session.get(films_url, params=params).json()
 
-    def film_info(self, film_id=0):
+    def get_film_info(self, film_id=0):
         film_url = '{0}/creations/16-{1}'.format(self.url, film_id)
         return self.session.get(film_url).json()
 
-    def search(self, name, offset=0, limit=1000):
+    def search_film(self, name, offset=0, limit=1000):
         arg = {'searchString': name, 'searchThemeID': 2,
                'range.Offset': offset, 'range.Limit': limit}
         search_url = '{}/searchitems'.format(self.url)
