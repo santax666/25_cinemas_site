@@ -5,16 +5,16 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 
-def get_film_id(name_film, year):
-    name = re.sub(r'(-)(\d+)$', r' \2', name_film)
+def get_film_id(film_name, year):
+    film = re.sub(r'(-)(\d+)$', r' \2', film_name)
     url = 'https://suggest-kinopoisk.yandex.net/suggest-kinopoisk'
-    query = {'srv': 'kinopoisk', 'part': name, '_': datetime.now().timestamp()}
+    query = {'srv': 'kinopoisk', 'part': film, '_': datetime.now().timestamp()}
     content = requests.get(url, params=query).json()[2]
     films_data = [json.loads(x) for x in content]
     films = [x for x in films_data if x['searchObjectType'] == 'COBJECT']
-    for film in films:
-        if film.get('title') == name and film['years'][0] == year:
-            return str(film['entityId'])
+    for film_info in films:
+        if film_info.get('title') == film and film_info['years'][0] == year:
+            return str(film_info['entityId'])
     else:
         return str(films[0]['entityId'])
 
