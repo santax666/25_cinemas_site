@@ -73,33 +73,9 @@
           </dd>
           {% if film['kp_id'] %}
             <dt>Кинопоиска:</dt>
-            <dd><a href="https://www.kinopoisk.ru/film/{{ film['kp_id'] }}/">рейтинг
-            {% if film['kp'][0] %}
-              {{ film['kp'][0] }};
-            {% else %}
-              отсутствует;
-            {% endif %}
-            {% if film['kp'][1] %}
-              голосов {{ film['kp'][1] }};
-            {% else %}
-              голоса отсутствуют;
-            {% endif %}</a>
-          </dd>
-          {% endif %}
-          {% if film['imdb'] %}
+            <dd><a href="https://www.kinopoisk.ru/film/{{ film['kp_id'] }}/">рейтинг {{ film['kp'][0] }}; голосов {{ film['kp'][1] }};</a></dd>
             <dt>IMDb:</dt>
-            <dd>рейтинг
-            {% if film['imdb'][0] != '-' %}
-              {{ film['imdb'][0][:-1] }};
-            {% else %}
-              отсутствует;
-            {% endif %}
-            {% if film['imdb'][1] != '-' %}
-              голосов {{ film['imdb'][1] }};
-            {% else %}
-              голоса отсутствуют;
-            {% endif %}</a>
-          </dd>
+            <dd>рейтинг {{ film['imdb'][0] }}; голосов {{ film['imdb'][1] }};</dd>
           {% endif %}
         </dl>
       </div>

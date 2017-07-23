@@ -20,11 +20,13 @@ def get_film_id(film_name, year):
 
 
 def get_ratings(kp_id):
-    cache_url = 'http://webcache.googleusercontent.com/search?q=cache:'
-    url = '{0}https://www.kinopoisk.ru/film/{1}'.format(cache_url, kp_id)
-    soup = BeautifulSoup(requests.get(url).content, 'html.parser')
-    kp_rate = getattr(soup.find('span', {'class': 'rating_ball'}), 'text', None)
-    kp_vote = getattr(soup.find('span', {'class': 'ratingCount'}), 'text', None)
-    imdb_style = 'color:#999;font:100 11px tahoma, verdana'
-    imdb = getattr(soup.find('div', {'style': imdb_style}), 'text', None)
-    return (kp_rate, kp_vote,), imdb
+    url = 'http://www.kinopoisk.ru/rating/{}.xml'.format(kp_id)
+    soup = BeautifulSoup(requests.get(url).content, 'lxml')
+    kp_rate = kp_votes = imdb_rate = imdb_votes = '-'
+    kp = (soup('kp_rating') or [False])[0]
+    if kp:
+        kp_rate, kp_votes = kp.text, kp['num_vote']
+    imdb = (soup('imdb_rating') or [False])[0]
+    if imdb:
+        imdb_rate, imdb_votes = imdb.text, imdb['num_vote']
+    return (kp_rate, kp_votes,), (imdb_rate, imdb_votes,)

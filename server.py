@@ -26,8 +26,6 @@ def get_film_info(film_id):
     film['Tags'] = ', '.join(d['Name'] for d in film['Tags'])
     film['kp_id'] = kp.get_film_id(film['Name'][1:-1], int(film['Year']))
     film['kp'], film['imdb'] = kp.get_ratings(film['kp_id'])
-    if film['imdb'] is not None:
-        film['imdb'] = re.split(r'[:,(,)]', film['imdb'])[1:-1]
     release = film['ReleaseRusDate']
     if release is not None:
         film['Exit'] = datetime.strptime(release[:-6], "%Y-%m-%dT%H:%M:%S")
