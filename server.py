@@ -1,16 +1,24 @@
 import re
-import kinopoisk as kp
 from afisha_api import afisha_films
 from datetime import datetime
 from werkzeug.contrib.cache import SimpleCache
 from flask import Flask, render_template, request, jsonify, abort
-
+from kinopoisk.movie import Movie
 
 CACHE_TIME = 12 * 60 * 60
 TITLE = {'schedule': 'Сеансы в кинотеатрах Москвы',
          'search': 'Список фильмов по запросу "{}"',
          'api': 'Информация о работе с API',
          '404': 'Ошибка 404'}
+
+
+def get_kp_film_info(film_name, year):
+    title = re.sub(r'(-)(\d+)$', r' \2', film_name)
+    films_list = Movie.objects.search(title)
+    if films_list:
+        for film in films_list:
+            if film.title == title and film.year == year:
+                return film.id, (film.rating, film.votes,), (film.imdb_rating, film.imdb_votes,)
 
 
 def get_films_schedule():
@@ -24,8 +32,7 @@ def get_films_schedule():
 def get_film_info(film_id):
     film = afisha.get_film_info(film_id).get('Data') or abort(404)
     film['Tags'] = ', '.join(d['Name'] for d in film['Tags'])
-    film['kp_id'] = kp.get_film_id(film['Name'][1:-1], int(film['Year']))
-    film['kp'], film['imdb'] = kp.get_ratings(film['kp_id'])
+    film['kp_id'], film['kp'], film['imdb'] = get_kp_film_info(film['Name'], int(film['Year']))
     release = film['ReleaseRusDate']
     if release is not None:
         film['Exit'] = datetime.strptime(release[:-6], "%Y-%m-%dT%H:%M:%S")
@@ -75,4 +82,4 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
